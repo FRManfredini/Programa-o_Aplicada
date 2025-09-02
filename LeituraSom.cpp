@@ -2,12 +2,12 @@
  * @file LeituraSom.cpp
  * @brief Exemplo de leitura de ADC na placa DK32MP usando interface sysfs
  *
- * Este código implementa uma classe para acessar o conversor analógico-digital
+ * Este cÃ³digo implementa uma classe para acessar o conversor analÃ³gico-digital
  * (ADC) via arquivos do sistema em Linux. Ele permite obter o valor bruto da
- * leitura e convertê-lo para tensão em Volts.
+ * leitura e convertÃª-lo para tensÃ£o em Volts.
  *
  * @author
- * Dálet, Manfredini e Viegas
+ * DÃ¡let, Manfredini e Viegas
  * @date
  * 2025-09-02
  */
@@ -19,37 +19,37 @@
 
  /**
   * @class LeituraSom
-  * @brief Classe para leitura de valores do ADC através da interface sysfs
+  * @brief Classe para leitura de valores do ADC atravÃ©s da interface sysfs
   *
   * A classe encapsula o acesso a um ADC representado como arquivo no sistema
-  * Linux. Fornece métodos para obter a leitura bruta e convertê-la em tensão.
+  * Linux. Fornece mÃ©todos para obter a leitura bruta e convertÃª-la em tensÃ£o.
   */
 class LeituraSom {
 private:
     std::string adc_path; ///< Caminho do arquivo do ADC (sysfs)
-    float VREF;           ///< Tensão de referência (em Volts)
-    int RESOLUCAO;        ///< Resolução do ADC (máximo valor da contagem)
-    int leitura;          ///< Último valor lido do ADC
+    float VREF;           ///< TensÃ£o de referÃªncia (em Volts)
+    int RESOLUCAO;        ///< ResoluÃ§Ã£o do ADC (mÃ¡ximo valor da contagem)
+    int leitura;          ///< Ãšltimo valor lido do ADC
 
 public:
     /**
      * @brief Construtor da classe LeituraSom
      * @param path Caminho do arquivo do ADC no sysfs
-     * @param vref Tensão de referência (padrão = 3.3 V)
-     * @param resolucao Resolução máxima do ADC (padrão = 65535)
+     * @param vref TensÃ£o de referÃªncia (padrÃ£o = 3.3 V)
+     * @param resolucao ResoluÃ§Ã£o mÃ¡xima do ADC (padrÃ£o = 65535)
      */
     LeituraSom(const std::string& path, float vref = 3.3, int resolucao = 65535)
         : adc_path(path), VREF(vref), RESOLUCAO(resolucao), leitura(0) {
     }
 
     /**
-     * @brief Lê o valor bruto do ADC a partir do arquivo
-     * @return true se a leitura foi realizada com sucesso, false caso contrário
+     * @brief LÃª o valor bruto do ADC a partir do arquivo
+     * @return true se a leitura foi realizada com sucesso, false caso contrÃ¡rio
      */
     bool ler() {
         std::ifstream adc_file(adc_path);
         if (!adc_file.is_open()) {
-            std::cerr << "Erro: não consegui abrir " << adc_path << std::endl;
+            std::cerr << "Erro: nÃ£o consegui abrir " << adc_path << std::endl;
             return false;
         }
         adc_file >> leitura;
@@ -58,16 +58,16 @@ public:
     }
 
     /**
-     * @brief Converte a última leitura para tensão (em Volts)
-     * @return Valor em Volts correspondente à leitura
+     * @brief Converte a Ãºltima leitura para tensÃ£o (em Volts)
+     * @return Valor em Volts correspondente Ã  leitura
      */
     float getTensao() const {
         return leitura * VREF / RESOLUCAO;
     }
 
     /**
-     * @brief Retorna a última leitura bruta do ADC
-     * @return Valor inteiro correspondente à leitura
+     * @brief Retorna a Ãºltima leitura bruta do ADC
+     * @return Valor inteiro correspondente Ã  leitura
      */
     int getLeitura() const {
         return leitura;
@@ -75,12 +75,12 @@ public:
 };
 
 /**
- * @brief Função principal
+ * @brief FunÃ§Ã£o principal
  *
  * Cria um objeto LeituraSom associado ao canal A4 (in_voltage13_raw)
- * e exibe continuamente a leitura bruta e a tensão correspondente.
+ * e exibe continuamente a leitura bruta e a tensÃ£o correspondente.
  *
- * @return Código de saída do programa (0 = sucesso)
+ * @return CÃ³digo de saÃ­da do programa (0 = sucesso)
  */
 int main() {
     LeituraSom adcA4("/sys/bus/iio/devices/iio:device0/in_voltage13_raw");
